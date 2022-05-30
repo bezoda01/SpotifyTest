@@ -1,12 +1,8 @@
-
 package models.album;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeSet;
-import javax.annotation.Generated;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -35,7 +31,6 @@ import lombok.Data;
         "type",
         "uri"
 })
-@Generated("jsonschema2pojo")
 public class AlbumModel {
 
     @JsonProperty("album_type")

@@ -1,6 +1,5 @@
 package models.track;
 
-import javax.annotation.Generated;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -16,7 +15,6 @@ import lombok.Data;
     "type",
     "uri"
 })
-@Generated("jsonschema2pojo")
 public class Artist__1 {
 
     @JsonProperty("external_urls")
