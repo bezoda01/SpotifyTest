@@ -116,4 +116,8 @@ public abstract class BaseElement {
     public void focusOnElementAndClick() {
         new Actions(Driver.getDriver()).moveToElement(findElement()).click().perform();
     }
+
+    public void focusOnElement() {
+        new Actions(Driver.getDriver()).moveToElement(findElement()).perform();
+    }
 }

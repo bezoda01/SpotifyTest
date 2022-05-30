@@ -1,6 +1,7 @@
 package utils;
 
 import models.ResponseModel;
+import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -9,6 +10,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.message.BasicHeader;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,8 +41,27 @@ public class APIUtils {
         return new ResponseModel(body, response.getStatusLine().getStatusCode());
     }
 
-    public static ResponseModel postRequest(String inquiry, NameValuePair... params) {
-        HttpPost httppost = new HttpPost(config.get("apiUrl") + inquiry);
+    public static ResponseModel getRequest(String inquiry, String mainHeader, String valueHeader) {
+        HttpGet get = new HttpGet(config.get("apiUrl") + inquiry);
+        HttpResponse response = null;
+        get.addHeader(mainHeader, valueHeader);
+        String body = null;
+        try {
+            response = client.execute(get);
+            if (response.containsHeader(null)) {
+                body = null;
+            } else {
+                body = new BasicResponseHandler().handleResponse(response);
+            }
+        } catch (IllegalArgumentException | IOException e) {
+            e.printStackTrace();
+        }
+
+        return new ResponseModel(body, response.getStatusLine().getStatusCode());
+    }
+
+    public static ResponseModel postRequest(NameValuePair... params) {
+        HttpPost httppost = new HttpPost(config.get("apiUrlToken").toString());
         HttpResponse response = null;
         String body = null;
         List<NameValuePair> list = new ArrayList<NameValuePair>();
