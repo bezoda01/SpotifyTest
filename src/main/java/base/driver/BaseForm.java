@@ -2,6 +2,8 @@ package base.driver;
 
 import base.elements.BaseElement;
 
+import static base.driver.Loggerr.*;
+
 public abstract class BaseForm {
     private BaseElement uniqueElement;
     private String formName;
@@ -14,11 +16,7 @@ public abstract class BaseForm {
     }
 
     public boolean isDisplayed() {
-        Loggerr.getLogger().info("Проверяем наличие уникального элемента " + formName);
+        log("Проверяем наличие уникального элемента " + formName);
         return uniqueElement.isDisplayed();
     }
-
-
-
-
 }

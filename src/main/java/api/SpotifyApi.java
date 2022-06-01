@@ -3,6 +3,7 @@ package api;
 import models.ResponseModel;
 import org.apache.http.message.BasicNameValuePair;
 
+import static con.Constants.config;
 import static utils.APIUtils.*;
 import static api.SpotifyApiParam.*;
 import static api.ApiEndPoints.*;
@@ -16,7 +17,7 @@ public class SpotifyApi {
     }
 
     public static ResponseModel getToken(String clientId, String clientSecret) {
-        return postRequest(
+        return postRequest(config.get("apiUrlToken").toString(),
                 new BasicNameValuePair(GRANT_TYPE.getValue(), "client_credentials"),
                 new BasicNameValuePair(CLIENT_ID.getValue(), clientId),
                 new BasicNameValuePair(CLIENT_SECRET.getValue(), clientSecret));

@@ -1,8 +1,9 @@
 package base.elements;
 
-import base.driver.Loggerr;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+
+import static base.driver.Loggerr.log;
 
 public class TextField extends BaseElement {
     public TextField(By locator, String name) {
@@ -10,12 +11,12 @@ public class TextField extends BaseElement {
     }
 
     public void sendText(String text) {
-        Loggerr.getLogger().info("Отправляем текст - " + text);
+        log("Отправляем текст - " + text);
         findElement().sendKeys(text);
     }
 
     public void sendText(Keys keys) {
-        Loggerr.getLogger().info("Отправляем - " + keys.toString());
+        log("Отправляем - " + keys.toString());
         findElement().sendKeys(keys);
     }
 }

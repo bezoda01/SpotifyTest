@@ -2,16 +2,16 @@ package base.elements;
 
 import base.driver.Driver;
 import base.driver.JavaScript;
-import base.driver.Loggerr;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.time.Duration;
 import java.util.List;
 import java.util.function.Function;
+
+import static base.driver.Loggerr.*;
 
 public abstract class BaseElement {
     private By element;
@@ -23,39 +23,42 @@ public abstract class BaseElement {
     }
 
     protected List<WebElement> findElements() {
-        Loggerr.getLogger().info("Поиск элементов - " + name);
+        log("Поиск элементов - " + name);
         return Driver.getDriver().findElements(element);
     }
+
     protected WebElement findElement() {
-        Loggerr.getLogger().info("Поиск элементов - " + name);
+        log("Поиск элементов - " + name);
         return explicitWait(element);
     }
 
     protected WebElement findElementWithFluent() {
-        Loggerr.getLogger().info("Поиск элементов - " + name);
+        log("Поиск элементов - " + name);
         return fluentWait().until(new Function<WebDriver, WebElement>() {
             public WebElement apply(WebDriver driver) {
-                return driver.findElement(element);}});
+                return driver.findElement(element);
+            }
+        });
     }
 
     public void clickBtn() {
-        Loggerr.getLogger().info("Кликаем на кнопку - " + name);
+        log("Кликаем на кнопку - " + name);
         findElement().click();
     }
 
     public void clickWithJS() {
-        Loggerr.getLogger().info("Кликаем на кнопку - " + name);
+        log("Кликаем на кнопку - " + name);
         JavascriptExecutor executor = (JavascriptExecutor) Driver.getDriver();
         executor.executeScript("arguments[0].click();", findElement());
     }
 
     public String getText() {
-        Loggerr.getLogger().info("Возвращаем текст поля - " + name);
+        log("Возвращаем текст поля - " + name);
         return findElement().getText();
     }
 
     public String[] getMasText() {
-        Loggerr.getLogger().info("Возвращение массива строк - " + name);
+        log("Возвращение массива строк - " + name);
         List<WebElement> list = findElements();
         String temp = list.get(1).getText();
         String[] mas = temp.split("\n");
@@ -63,17 +66,17 @@ public abstract class BaseElement {
     }
 
     public String getTextAttribute(String attribute) {
-        Loggerr.getLogger().info("Возвращаем значение атрибута - " + name);
+        log("Возвращаем значение атрибута - " + name);
         return findElementWithFluent().getAttribute(attribute);
     }
 
     public Boolean isDisplayed() {
-        Loggerr.getLogger().info("Проверка существования элемента " + name);
+        log("Проверка существования элемента " + name);
         return findElement().isDisplayed();
     }
 
     public Boolean isEnabled() {
-        Loggerr.getLogger().info("Проверка существования элемента " + name);
+        log("Проверка существования элемента " + name);
         return findElement().isEnabled();
     }
 
@@ -92,12 +95,12 @@ public abstract class BaseElement {
     }
 
     public void switchFrame() {
-        Loggerr.getLogger().info("Переключаемся во фрейм - " + name);
+        log("Переключаемся во фрейм - " + name);
         Driver.getDriver().switchTo().frame(findElement());
     }
 
     public void frameReturn() {
-        Loggerr.getLogger().info("Возвращаемся в дефолтный документ ");
+        log("Возвращаемся в дефолтный документ ");
         Driver.getDriver().switchTo().defaultContent();
     }
 
@@ -111,10 +114,6 @@ public abstract class BaseElement {
     public void executeScript(JavaScript javaScript) {
         JavascriptExecutor executor = (JavascriptExecutor) Driver.getDriver();
         executor.executeScript(javaScript.getScript(), findElement());
-    }
-
-    public void focusOnElementAndClick() {
-        new Actions(Driver.getDriver()).moveToElement(findElement()).click().perform();
     }
 
     public void focusOnElement() {

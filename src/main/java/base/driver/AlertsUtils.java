@@ -3,6 +3,8 @@ package base.driver;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.TimeoutException;
 
+import static base.driver.Loggerr.log;
+
 public class AlertsUtils {
     private static Alert alert;
 
@@ -12,24 +14,24 @@ public class AlertsUtils {
 
     public static String getWords() {
         switchToAlert();
-        Loggerr.getLogger().info("Берём текст Alert.");
+        log("Берём текст Alert.");
         return alert.getText();
     }
 
     public static void acceptAlert() {
         switchToAlert();
-        Loggerr.getLogger().info("Alert принимается.");
+        log("Alert принимается.");
         alert.accept();
     }
 
     public static void dismissAlert() {
-        Loggerr.getLogger().info("Alert отменяется.");
+        log("Alert отменяется.");
         alert.dismiss();
     }
 
     public static void sendAlert(String text) {
         switchToAlert();
-        Loggerr.getLogger().info("Вводится текст в Alert");
+        log("Вводится текст в Alert");
         alert.sendKeys(text);
     }
 

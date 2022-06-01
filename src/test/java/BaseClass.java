@@ -4,11 +4,12 @@ import com.google.common.collect.ImmutableMap;
 import org.testng.IHookCallBack;
 import org.testng.IHookable;
 import org.testng.ITestResult;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 
+import java.nio.file.Paths;
+
+import static utils.AllureUtils.*;
 import static base.driver.BrowserUtils.*;
 import static con.Constants.config;
 
@@ -29,6 +30,7 @@ public class BaseClass implements IHookable {
     @AfterSuite
     public static void afterMethod() {
         quit();
+        addAttachment(Paths.get("log.log"), "Log");
     }
 
 

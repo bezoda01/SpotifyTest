@@ -3,16 +3,18 @@ package base.driver;
 import io.qameta.allure.Attachment;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.logging.LogEntries;
+import org.openqa.selenium.logging.LogType;
 import java.io.File;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import static base.driver.Driver.getDriver;
+import static base.driver.Loggerr.log;
 import static utils.FileUtils.copy;
 import static con.Constants.*;
 
 public class BrowserUtils {
-
 
     public static boolean makeScreenShot(String name) {
         File scrFile = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);
@@ -27,14 +29,17 @@ public class BrowserUtils {
     }
 
     public static void close() {
+        log("close");
         getDriver().close();
     }
 
     public static void quit() {
+        log("TearDown");
         getDriver().quit();
     }
 
     public static void goTo() {
+        log("Переходим - " + config.get("url").toString());
         getDriver().get(config.get("url").toString());
     }
 
@@ -58,5 +63,9 @@ public class BrowserUtils {
 
     public static String getPageSource() {
         return getDriver().getPageSource();
+    }
+
+    public static LogEntries getBrowserLog() {
+        return getDriver().manage().logs().get(LogType.BROWSER);
     }
 }

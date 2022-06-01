@@ -1,5 +1,7 @@
 package utils;
 
+import io.qameta.allure.Attachment;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
