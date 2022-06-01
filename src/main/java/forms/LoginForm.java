@@ -15,8 +15,11 @@ public class LoginForm extends BaseForm {
         super(new TextField(By.xpath("//div[@data-testId = 'login-container']"), "login"), "login");
     }
 
-    public void inputData(String username, String password) {
+    public void inputUsername(String username) {
         usernameField.sendText(username);
+    }
+
+    public void inputPassword(String password) {
         passwordField.sendText(password);
         logOnBtn.clickBtn();
     }

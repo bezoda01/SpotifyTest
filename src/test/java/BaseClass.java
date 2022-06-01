@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import org.testng.IHookCallBack;
 import org.testng.IHookable;
 import org.testng.ITestResult;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 
@@ -18,7 +19,6 @@ public class BaseClass implements IHookable {
     @BeforeClass
     public static void beforeMethod() {
         maximizeWindow();
-        goTo();
         AllureEnvironmentWriter.allureEnvironmentWriter(
                 ImmutableMap.<String, String> builder()
                         .put("Browser", config.get("type").toString())
@@ -27,7 +27,7 @@ public class BaseClass implements IHookable {
                         .build());
     }
 
-    @AfterSuite
+    @AfterClass
     public static void afterMethod() {
         quit();
         addAttachment(Paths.get("log.log"), "Log");
