@@ -7,8 +7,6 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.opera.OperaDriver;
 
-import static con.Constants.*;
-
 public class Driver {
 
     private static WebDriver driver;
@@ -21,7 +19,7 @@ public class Driver {
     }
 
     private static WebDriver getInstance() {
-        switch (config.get("type").toString().toLowerCase()) {
+        switch (System.getenv("BROWSER")) {
             case "chrome": {
                 WebDriverManager.chromedriver().setup();
                 return new ChromeDriver();

@@ -1,9 +1,4 @@
 import api.SpotifyApi;
-import cucumber.api.PendingException;
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
 import forms.LoginForm;
 import forms.MainForm;
 import forms.MyMediaLibForm;
@@ -17,15 +12,17 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import java.util.Map;
 
-import static org.testng.Assert.*;
-import static con.Constants.testData;
-import static api.SpotifyApi.*;
-import static api.HttpStatusCode.*;
-import static utils.JsonUtils.*;
+import static api.HttpStatusCode.OK;
+import static api.SpotifyApi.getToken;
 import static base.driver.BrowserUtils.*;
+import static con.Constants.testData;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
+import static utils.JsonUtils.jsonStringToObject;
 
 public class SearchCurrentTrek_Test extends BaseClass{
     public SpotifyApi api;
+    public LoginForm loginForm;
     public AlbumModel albumModel;
     public Map<String, String> tracksAndId;
     public TrackModel trackModel;
@@ -37,10 +34,9 @@ public class SearchCurrentTrek_Test extends BaseClass{
         checkMainFormIsDisplayed(mainForm);
         mainForm.closeCookie();
         mainForm.clickToLogOn();
-        LoginForm loginForm = new LoginForm();
+        loginForm = new LoginForm();
         checkLoginFormIsDisplayed(loginForm);
-        loginForm.inputUsername(testData.get("username").toString());
-        loginForm.inputPassword(testData.get("password").toString());
+        logOg(System.getenv("LOGIN"), System.getenv("PASSWORD"));
         assertTrue(mainForm.isDisplayed(), "Log on was not sucessfully");
         mainForm.clickOnSearchBtn();
         SearchForm searchForm = new SearchForm();
@@ -73,6 +69,12 @@ public class SearchCurrentTrek_Test extends BaseClass{
         checkMyMediaLibFormIsDisplayed(mediaLib);
         checkCurrentTrackIsContains(albumModel.getName());
         mediaLib.deleteTrack();
+    }
+
+    @Step("Log on")
+    public void logOg(String userName, String password) {
+        loginForm.inputUsername(userName);
+        loginForm.inputPassword(password);
     }
 
     @Step("is displayed")

@@ -21,7 +21,7 @@ public class BaseClass implements IHookable {
         maximizeWindow();
         AllureEnvironmentWriter.allureEnvironmentWriter(
                 ImmutableMap.<String, String> builder()
-                        .put("Browser", config.get("type").toString())
+                        .put("Browser", System.getenv("BROWSER"))
                         .put("ENV", getHostName())
                         .put("URL", config.get("url").toString())
                         .build());

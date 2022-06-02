@@ -7,6 +7,7 @@ import static con.Constants.config;
 import static utils.APIUtils.*;
 import static api.SpotifyApiParam.*;
 import static api.ApiEndPoints.*;
+import static api.ApiInquiryForm.*;
 
 public class SpotifyApi {
     private static String authenticationForm = "Authorization";
@@ -29,5 +30,9 @@ public class SpotifyApi {
 
     public ResponseModel getTrack(String trackId) {
         return getRequest(TRACK.getValue() + trackId, authenticationForm, authentication);
+    }
+
+    public ResponseModel searchWithNameAndType(String name, String artist, SpotifyApiParam type) {
+        return getRequest(String.format(SEARCH.getValue(), name, artist, type.getValue()), authenticationForm, authentication);
     }
 }
