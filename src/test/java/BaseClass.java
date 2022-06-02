@@ -5,14 +5,13 @@ import org.testng.IHookCallBack;
 import org.testng.IHookable;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 
 import java.nio.file.Paths;
 
-import static utils.AllureUtils.*;
 import static base.driver.BrowserUtils.*;
 import static con.Constants.config;
+import static utils.AllureUtils.addAttachment;
 
 public class BaseClass implements IHookable {
 
