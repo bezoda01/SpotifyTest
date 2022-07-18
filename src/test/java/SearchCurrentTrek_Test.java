@@ -14,8 +14,8 @@ import java.util.Map;
 
 import static api.HttpStatusCode.OK;
 import static api.SpotifyApi.getToken;
-import static base.driver.BrowserUtils.*;
-import static con.Constants.testData;
+import static selen.settings.Settings.*;
+import static selen.Selen.*;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 import static utils.JsonUtils.jsonStringToObject;
@@ -29,14 +29,14 @@ public class SearchCurrentTrek_Test extends BaseClass{
 
     @Test
     public void searchTrekAsId() {
-        goTo();
+        browser().goTo();
         MainForm mainForm = new MainForm();
         checkMainFormIsDisplayed(mainForm);
         mainForm.closeCookie();
         mainForm.clickToLogOn();
         loginForm = new LoginForm();
         checkLoginFormIsDisplayed(loginForm);
-        logOg(System.getenv("LOGIN"), System.getenv("PASSWORD"));
+        logOg(testData.get("login").toString(), testData.get("password").toString());
         assertTrue(mainForm.isDisplayed(), "Log on was not sucessfully");
         mainForm.clickOnSearchBtn();
         SearchForm searchForm = new SearchForm();
@@ -56,7 +56,7 @@ public class SearchCurrentTrek_Test extends BaseClass{
         checkTrackIsExistInAlbumInquiry(tracksAndId, trackModel);
         searchForm.search(trackModel.getName());
         searchForm.playTrack(trackModel.getName());
-        checkTrackIdIsContains(getPageSource(), tracksAndId.get(testData.get("trackName").toString()));
+        checkTrackIdIsContains(browser().getPageSource(), tracksAndId.get(testData.get("trackName").toString()));
     }
 
     @Test(dependsOnMethods = "searchTrekAsId")
@@ -80,37 +80,37 @@ public class SearchCurrentTrek_Test extends BaseClass{
     @Step("is displayed")
     public void checkMainFormIsDisplayed(MainForm form) {
         assertTrue(form.isDisplayed(), "main page was not open");
-        makeScreenShotByByte("Step");
+        browser().makeScreenShotByByte("Step");
     }
 
     @Step("is displayed")
     public void checkMyMediaLibFormIsDisplayed(MyMediaLibForm form) {
         assertTrue(form.isDisplayed(), "media lib page was not open");
-        makeScreenShotByByte("Step");
+        browser().makeScreenShotByByte("Step");
     }
 
     @Step("is displayed")
     public void checkLoginFormIsDisplayed(LoginForm form) {
         assertTrue(form.isDisplayed(), "login page was not open");
-        makeScreenShotByByte("Step");
+        browser().makeScreenShotByByte("Step");
     }
 
     @Step("is displayed")
     public void checkSearchFormIsDisplayed(SearchForm form) {
         assertTrue(form.isDisplayed(), "search page was not open");
-        makeScreenShotByByte("Step");
+        browser().makeScreenShotByByte("Step");
     }
 
     @Step("request is correct")
     public void checkInquiryIsCorrect(int statusCode) {
         assertEquals(OK.getValue(), statusCode, "request was error");
-        makeScreenShotByByte("Step");
+        browser().makeScreenShotByByte("Step");
     }
 
     @Step("request contains track name")
     public void checkTrackIsExist(Map<String, String> tracksAndId, String trackName) {
         assertTrue(tracksAndId.containsKey(trackName), "track was not founded");
-        makeScreenShotByByte("Step");
+        browser().makeScreenShotByByte("Step");
     }
 
     @Step("request contains correct tack name and correct id ")
@@ -119,18 +119,18 @@ public class SearchCurrentTrek_Test extends BaseClass{
         softAssert.assertTrue(tracksAndId.containsKey(trackModel.getName()), "Tracks are different");
         softAssert.assertTrue(tracksAndId.containsValue(trackModel.getId()), "Tracks are different");
         softAssert.assertAll();
-        makeScreenShotByByte("Step");
+        browser().makeScreenShotByByte("Step");
     }
 
     @Step("Page source contains current track id")
     public void checkTrackIdIsContains(String pageSource, String trackId) {
         assertTrue(pageSource.contains(trackId), "track was not founded");
-        makeScreenShotByByte("Step");
+        browser().makeScreenShotByByte("Step");
     }
 
     @Step("Media lib contains current track")
     public void checkCurrentTrackIsContains(String track) {
-        assertTrue(getPageSource().contains(track), "media lib do not contains current track");
-        makeScreenShotByByte("Step");
+        assertTrue(browser().getPageSource().contains(track), "media lib do not contains current track");
+        browser().makeScreenShotByByte("Step");
     }
 }

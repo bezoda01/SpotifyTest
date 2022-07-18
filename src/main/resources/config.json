@@ -1,7 +1,0 @@
-{
-  "type": "chrome",
-  "url": "https://open.spotify.com/",
-  "pathScreen": "src/main/resources/shot/",
-  "apiUrl": "https://api.spotify.com/v1",
-  "apiUrlToken": "https://accounts.spotify.com/api/token"
-}

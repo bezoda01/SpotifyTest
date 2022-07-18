@@ -1,4 +1,3 @@
-import base.driver.BrowserUtils;
 import com.github.automatedowl.tools.AllureEnvironmentWriter;
 import com.google.common.collect.ImmutableMap;
 import org.testng.IHookCallBack;
@@ -6,29 +5,27 @@ import org.testng.IHookable;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-
 import java.nio.file.Paths;
 
-import static base.driver.BrowserUtils.*;
-import static con.Constants.config;
+import static selen.settings.Settings.*;
+import static selen.Selen.*;
 import static utils.AllureUtils.addAttachment;
 
 public class BaseClass implements IHookable {
 
     @BeforeClass
     public static void beforeMethod() {
-        maximizeWindow();
         AllureEnvironmentWriter.allureEnvironmentWriter(
                 ImmutableMap.<String, String> builder()
-                        .put("Browser", System.getenv("BROWSER"))
-                        .put("ENV", getHostName())
-                        .put("URL", config.get("url").toString())
+                        .put("Browser", settings.get("browserName").toString())
+                        .put("ENV", browser().getHostName())
+                        .put("URL", settings.get("url").toString())
                         .build());
     }
 
     @AfterClass
     public static void afterMethod() {
-        quit();
+        browser().quit();
         addAttachment(Paths.get("log.log"), "Log");
     }
 
@@ -37,7 +34,7 @@ public class BaseClass implements IHookable {
     public void run(IHookCallBack callBack, ITestResult testResult) {
         callBack.runTestMethod(testResult);
         if (testResult.getThrowable() != null) {
-            BrowserUtils.makeScreenShotByByte(testResult.getMethod().getMethodName());
+            browser().makeScreenShotByByte(testResult.getMethod().getMethodName());
         }
     }
 }
